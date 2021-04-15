@@ -45,5 +45,5 @@ const updateProfile = (req, res, next) => {
 };
 
 module.exports = {
-  getUserInfo, updateProfile
+  getUserInfo, updateProfile,
 }
