@@ -29,7 +29,7 @@ const createUser = (req, res, next) => {
     }))
     .then((user) => res.status(200).send({
       email: user.email,
-      name: user.name
+      name: user.name,
     }))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -65,4 +65,4 @@ const login = async (req, res, next) => {
 
 module.exports = {
   createUser, login,
-}
+};

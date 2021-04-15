@@ -38,7 +38,7 @@ const postMovie = (req, res, next) => {
     nameEN,
     thumbnail,
     movieId,
-    owner
+    owner,
   })
     .then((movie) => res.status(201).send(movie))
     .catch((err) => {
@@ -67,5 +67,4 @@ const deleteMovie = (req, res, next) => {
 
 module.exports = {
   getMovies, postMovie, deleteMovie,
-}
-
+};

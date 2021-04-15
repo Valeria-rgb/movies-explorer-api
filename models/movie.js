@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { urlRegex } = require('../utils/constants')
+const { urlRegex } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -26,9 +26,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => {
-        return urlRegex.test(url);
-      },
+      validator: (url) => urlRegex.test(url),
       message: (props) => `${props.value} поле 'image' должно быть валидным url-адресом!`,
     },
   },
@@ -36,9 +34,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => {
-        return urlRegex.test(url);
-      },
+      validator: (url) => urlRegex.test(url),
       message: (props) => `${props.value} поле 'trailer' должно быть валидным url-адресом!`,
     },
   },
@@ -46,9 +42,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (url) => {
-        return urlRegex.test(url);
-      },
+      validator: (url) => urlRegex.test(url),
       message: (props) => `${props.value} поле 'thumbnail' должно быть валидным url-адресом!`,
     },
   },
@@ -72,5 +66,3 @@ const movieSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('movie', movieSchema);
-
-
