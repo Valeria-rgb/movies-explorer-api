@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-const usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
@@ -19,7 +19,7 @@ const PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', usersRouter);
+app.use('/', indexRouter);
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
