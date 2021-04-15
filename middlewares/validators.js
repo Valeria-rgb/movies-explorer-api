@@ -50,9 +50,16 @@ const postMovieValidator = celebrate({
   }),
 });
 
+const deleteMovieValidator = celebrate({
+  params: Joi.object().keys({
+    movieId: Joi.number().required(),
+  }).unknown(true),
+});
+
 module.exports = {
   signupValidator,
   signinValidator,
   updateProfileValidator,
   postMovieValidator,
+  deleteMovieValidator,
 };
