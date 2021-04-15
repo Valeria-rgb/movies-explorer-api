@@ -51,14 +51,15 @@ const postMovie = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  MovieModel.findById(req.params.movieId)
+  const { movieId } = req.params;
+  MovieModel.findById(movieId)
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Фильм с таким id не найден');
       } else if (movie.owner.toString() !== req.user._id.toString()) {
         throw new ForbiddenError('Нет! Вы не можете удалять фильмы других пользователей');
       } else {
-        MovieModel.findByIdAndDelete(req.params.movieId)
+        MovieModel.findByIdAndRemove(movieId)
           .then(() => res.send({ message: 'Фильм удалён успешно!' }));
       }
     })

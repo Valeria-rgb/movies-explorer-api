@@ -10,7 +10,7 @@ const signupValidator = celebrate({
       'string.max': 'Максимум 30 символов',
       'any.required': 'Обязательное поле',
     }),
-    name: Joi.string().min(2).max(30)
+    name: Joi.string().min(2).max(30),
   }),
 });
 
@@ -40,7 +40,7 @@ const postMovieValidator = celebrate({
     director: Joi.string().required().min(2).max(30),
     duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(30),
-    description: Joi.string().required().min(2).max(30),
+    description: Joi.string().required().min(2),
     image: Joi.string().required().regex(/^http[s]?:\/\/\w+/),
     trailer: Joi.string().required().regex(/^http[s]?:\/\/\w+/),
     thumbnail: Joi.string().required().regex(/^http[s]?:\/\/\w+/),
@@ -52,7 +52,7 @@ const postMovieValidator = celebrate({
 
 const deleteMovieValidator = celebrate({
   params: Joi.object().keys({
-    movieId: Joi.number().required(),
+    movieId: Joi.string().required().length(24).hex(),
   }).unknown(true),
 });
 
