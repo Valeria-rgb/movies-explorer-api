@@ -22,15 +22,15 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.18",
     "validator": "^13.5.2",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "express-rate-limit": "^5.2.6",
+    "helmet": "^4.4.1"
   },
   "devDependencies": {
     "cookie-parser": "^1.4.5",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "express-rate-limit": "^5.2.6",
-    "helmet": "^4.4.1",
     "nodemon": "^2.0.7"
   }
 }
