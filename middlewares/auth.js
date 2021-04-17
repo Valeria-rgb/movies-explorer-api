@@ -1,11 +1,14 @@
 const jwt = require('jsonwebtoken');
 
+const { authorizationIsNeededText,
+} = require('../utils/errorTexts');
+
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
     res
       .status(401)
-      .send({ message: 'Необходима авторизация' });
+      .send({ message: authorizationIsNeededText });
   }
 
   const token = authorization.replace('Bearer ', '');
@@ -17,7 +20,7 @@ module.exports = (req, res, next) => {
   } catch (err) {
     res
       .status(401)
-      .send({ message: 'Необходима авторизация' });
+      .send({ message: authorizationIsNeededText });
   }
 
   req.user = payload;

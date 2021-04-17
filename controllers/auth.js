@@ -8,6 +8,10 @@ const UserModel = require('../models/user');
 const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
+const { conflictErrorText,
+  badRequestErrorText,
+  unauthorizedErrorText,
+} = require('../utils/errorTexts');
 
 const createUser = (req, res, next) => {
   const {
@@ -18,7 +22,7 @@ const createUser = (req, res, next) => {
   })
     .then((data) => {
       if (data) {
-        throw new ConflictError('Пользователь с таким email уже существует!');
+        throw new ConflictError(conflictErrorText);
       }
       return bcrypt.hash(password, 10);
     })
@@ -33,7 +37,7 @@ const createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
-        throw new BadRequestError('Переданы некорректные данные!');
+        throw new BadRequestError(badRequestErrorText);
       } else {
         next(err);
       }
@@ -45,11 +49,11 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email }).select('+password');
     if (!user) {
-      next(new UnauthorizedError('Неправильные почта/пароль'));
+      next(new UnauthorizedError(unauthorizedErrorText));
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      next(new UnauthorizedError('Неправильные почта/пароль'));
+      next(new UnauthorizedError(unauthorizedErrorText));
     } else {
       const token = jwt.sign(
         { _id: user._id },
