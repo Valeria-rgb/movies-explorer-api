@@ -5,8 +5,9 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const { PORT } = require('./utils/constants');
-const { MongoUrl, MongoConfig, limiter } = require('./utils/config');
+const {
+  PORT, MONGO_URL, MongoConfig, limiter,
+} = require('./utils/config');
 const indexRouter = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -18,7 +19,7 @@ app.use(helmet());
 
 app.use(limiter);
 
-mongoose.connect(MongoUrl, MongoConfig);
+mongoose.connect(MONGO_URL, MongoConfig);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
