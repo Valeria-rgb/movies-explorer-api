@@ -8,7 +8,8 @@ const UserModel = require('../models/user');
 const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
-const { conflictErrorText,
+const {
+  conflictErrorText,
   badRequestErrorText,
   unauthorizedErrorText,
 } = require('../utils/errorTexts');

@@ -3,9 +3,7 @@ const UserModel = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
 
-const { badRequestErrorText,
-  notFoundUserErrorText,
-} = require('../utils/errorTexts');
+const { badRequestErrorText, notFoundUserErrorText } = require('../utils/errorTexts');
 
 const getUserInfo = (req, res, next) => {
   const id = req.user._id;
