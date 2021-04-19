@@ -5,11 +5,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
+const indexRouter = require('./routes/index');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const {
   PORT, MONGO_URL, MongoConfig, limiter,
 } = require('./utils/config');
-const indexRouter = require('./routes/index');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
@@ -17,14 +17,14 @@ app.use(cors());
 
 app.use(helmet());
 
-app.use(limiter);
-
 mongoose.connect(MONGO_URL, MongoConfig);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.use(indexRouter);
 
