@@ -10,7 +10,7 @@ const signupValidator = celebrate({
       'string.max': 'Максимум 30 символов',
       'any.required': 'Обязательное поле',
     }),
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
   }),
 });
 
@@ -41,9 +41,24 @@ const postMovieValidator = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(30),
     description: Joi.string().required().min(2),
-    image: Joi.string().required().regex(/^http[s]?:\/\/\w+/),
-    trailer: Joi.string().required().regex(/^http[s]?:\/\/\w+/),
-    thumbnail: Joi.string().required().regex(/^http[s]?:\/\/\w+/),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле image заполнено некорректно');
+    }),
+    trailer: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле trailer заполнено некорректно');
+    }),
+    thumbnail: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Поле thumbnail заполнено некорректно');
+    }),
     nameRU: Joi.string().required().min(2).max(30),
     nameEN: Joi.string().required().min(2).max(30),
     movieId: Joi.number().required(),
