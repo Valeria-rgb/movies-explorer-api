@@ -2,8 +2,9 @@ const UserModel = require('../models/user');
 
 const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
+const ConflictError = require('../errors/conflict-err');
 
-const { badRequestErrorText, notFoundUserErrorText } = require('../utils/errorTexts');
+const { badRequestErrorText, notFoundUserErrorText, conflictErrorText } = require('../utils/errorTexts');
 
 const getUserInfo = (req, res, next) => {
   const id = req.user._id;
@@ -40,10 +41,13 @@ const updateProfile = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         throw new BadRequestError(badRequestErrorText);
+      } else if (err.name === 'MongoError' && err.code === 11000 && err.codeName === 'DuplicateKey') {
+        throw new ConflictError(conflictErrorText);
       } else {
         next(err);
       }
-    });
+    })
+    .catch(next);
 };
 
 module.exports = {
