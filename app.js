@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const indexRouter = require('./routes/index');
+const { centralErrorHandler } = require('./errors/central-error-handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const {
   PORT, MONGO_URL, MongoConfig, limiter,
@@ -32,15 +33,7 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-
-  res
-    .status(statusCode)
-    .send({ message: statusCode === 500 ? 'Ошибка сервера!' : message });
-
-  next();
-});
+app.use(centralErrorHandler);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
