@@ -41,24 +41,9 @@ const postMovieValidator = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(30),
     description: Joi.string().required().min(2),
-    image: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message('Поле image заполнено некорректно');
-    }),
-    trailer: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message('Поле trailer заполнено некорректно');
-    }),
-    thumbnail: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message('Поле thumbnail заполнено некорректно');
-    }),
+    image: Joi.string().required().pattern(/https?:\/\/w{0,3}[a-z0-9-._~:\/?#[\]@!$&'()*+,;=]{0,}/i),
+    trailer: Joi.string().required().pattern(/https?:\/\/w{0,3}[a-z0-9-._~:\/?#[\]@!$&'()*+,;=]{0,}/i),
+    thumbnail: Joi.string().required().pattern(/https?:\/\/w{0,3}[a-z0-9-._~:\/?#[\]@!$&'()*+,;=]{0,}/i),
     nameRU: Joi.string().required().min(2).max(30),
     nameEN: Joi.string().required().min(2).max(30),
     movieId: Joi.number().required(),
