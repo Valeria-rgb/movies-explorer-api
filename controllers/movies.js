@@ -10,6 +10,7 @@ const {
 
 const getMovies = (req, res, next) => {
   MovieModel.find({})
+    .then((movies) => movies.filter((movie) => movie.owner === req.user._id))
     .then((movies) => res.status(200).send(movies))
     .catch(next);
 };
